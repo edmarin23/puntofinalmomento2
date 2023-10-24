@@ -1,0 +1,44 @@
+class Producto:
+    def __init__(self, id, nombre, descripcion, costo, cantidad, margen_de_venta):
+        self.id = id
+        self.nombre = nombre
+        self.descripcion = descripcion
+        self.costo = costo
+        self.cantidad = cantidad
+        self.margen_de_venta = margen_de_venta
+        self.precio_de_venta = None
+
+class RegistroProductos:
+    def __init__(self):
+        self.productos = {}
+
+    def registrar_producto(self, producto):
+        if producto.id not in self.productos:
+            precio_venta = producto.costo / (1 - producto.margen_de_venta)
+            producto.precio_de_venta = precio_venta
+            self.productos[producto.id] = producto
+
+    def imprimir_listado(self):
+        for id, producto in self.productos.items():
+            print(f"ID: {producto.id}")
+            print(f"Nombre: {producto.nombre}")
+            print(f"Descripción: {producto.descripcion}")
+            print(f"Costo: ${producto.costo}")
+            print(f"Cantidad: {producto.cantidad}")
+            print(f"Precio de Venta: ${producto.precio_de_venta}")
+            print("-------------")
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    registro = RegistroProductos()
+
+    producto1 = Producto(1, "Producto 1", "Descripción del Producto 1", 50.0, 10, 0.2)
+    registro.registrar_producto(producto1)
+
+    producto2 = Producto(2, "Producto 2", "Descripción del Producto 2", 30.0, 15, 0.15)
+    registro.registrar_producto(producto2)
+
+    producto3 = Producto(3, "Producto 3", "Descripción del Producto 3", 70.0, 8, 0.25)
+    registro.registrar_producto(producto3)
+
+    registro.imprimir_listado()
